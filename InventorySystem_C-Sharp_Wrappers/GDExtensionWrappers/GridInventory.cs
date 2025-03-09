@@ -115,7 +115,11 @@ public partial class GridInventory : Inventory
 
     public bool CanRotateItem(ItemStack stack) => Call("can_rotate_item", (Resource)stack).As<bool>();
 
-    public ItemStack GetStackAt(Vector2I position) => GDExtensionHelper.Bind<ItemStack>(Call("get_stack_at", position).As<GodotObject>());
+    public ItemStack GetStackAt(Vector2I position)
+    {
+        var godotObject = Call("get_stack_at", position).As<GodotObject>();
+        return godotObject != null ? GDExtensionHelper.Bind<ItemStack>(godotObject) : null;
+    }
 
     public int GetStackIndexAt(Vector2I position) => Call("get_stack_index_at", position).As<int>();
 
