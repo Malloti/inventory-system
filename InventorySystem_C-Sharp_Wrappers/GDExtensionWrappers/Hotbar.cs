@@ -213,7 +213,11 @@ public partial class Hotbar : NodeInventories
 
     public bool HasValidStackOnSelection() => Call("has_valid_stack_on_selection").As<bool>();
 
-    public ItemStack GetStackOnSlot(int slotIndex) => GDExtensionHelper.Bind<ItemStack>(Call("get_stack_on_slot", slotIndex).As<GodotObject>());
+    public ItemStack GetStackOnSlot(int slotIndex)
+    {
+        var godotObject = Call("get_stack_on_slot", slotIndex).As<GodotObject>();
+        return godotObject != null ? GDExtensionHelper.Bind<ItemStack>(godotObject) : null;
+    }
 
     public ItemStack GetStackOnSelection() => GDExtensionHelper.Bind<ItemStack>(Call("get_stack_on_selection").As<GodotObject>());
 
